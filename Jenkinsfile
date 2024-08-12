@@ -26,9 +26,10 @@ pipeline {
         }
         stage('Install Docker Compose') {
             steps {
-                sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose'
-                sh 'chmod +x /usr/local/bin/docker-compose'
-                sh 'docker-compose --version'
+                sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o $HOME/docker-compose'
+                sh 'chmod +x $HOME/docker-compose'
+                sh '$HOME/docker-compose --version'
+                sh 'export PATH=$PATH:$HOME && $HOME/docker-compose up -d'
             }
         }
         stage('Deploy Container') {
