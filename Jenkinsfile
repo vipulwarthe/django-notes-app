@@ -29,7 +29,7 @@ pipeline {
                 sh 'curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o $HOME/docker-compose'
                 sh 'chmod +x $HOME/docker-compose'
                 sh '$HOME/docker-compose --version'
-                sh 'export PATH=$PATH:$HOME && $HOME/docker-compose up -d'
+                sh 'export PATH=$PATH:$HOME && $HOME/docker-compose down && $HOME/docker-compose up -d'
             }
         }
         stage('Deploy Container') {
