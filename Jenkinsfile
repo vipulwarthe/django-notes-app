@@ -1,7 +1,7 @@
 pipeline {
     agent any 
     
-    stages{
+    stages {
         stage("Clone Code") {
             steps {
                 echo "Cloning the code"
@@ -14,13 +14,16 @@ pipeline {
                 sh "docker build -t my-note-app ."
             }
         }
-        stage("Push to Docker Hub") {
+        stage("Tag and Push to Docker Hub") {
             steps {
-                echo "Pushing the image to Docker Hub"
+                echo "Tagging and pushing the image to Docker Hub"
                 withCredentials([usernamePassword(credentialsId: "dockerHub", passwordVariable: "dockerHubPass", usernameVariable: "dockerHubUser")]) {
-                    sh "docker tag my-note-app ${env.dockerHubUser}/my-note-app:latest"
+                    // Tagging the image with 'latestnew' tag
+                    sh "docker tag my-note-app ${env.dockerHubUser}/my-note-app:latestnew"
+                    // Logging into Docker Hub
                     sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-                    sh "docker push ${env.dockerHubUser}/my-note-app:latest"
+                    // Pushing the image with 'latestnew' tag
+                    sh "docker push ${env.dockerHubUser}/my-note-app:latestnew"
                 }
             }
         }
