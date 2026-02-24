@@ -27,4 +27,54 @@ docker run -d -p 8000:8000 notes-app:latest
 Install Nginx reverse proxy to make this application available
 
 `sudo apt-get update`
-`sudo apt install nginx`
+
+`sudo apt install nginx -y`
+
+    sudo systemctl start nginx
+    sudo systemctl enable nginx
+    sudo systemctl status nginx
+
+Allow Firewall (If UFW Enabled)
+
+sudo ufw status
+
+    sudo ufw allow 'Nginx Full'
+
+Test in Browser
+
+    http://YOUR_SERVER_IP
+
+Nginx Main Config Location
+
+    /etc/nginx/nginx.conf
+
+Site configs:
+
+    /etc/nginx/sites-available/
+    /etc/nginx/sites-enabled/
+
+Use Nginx as Reverse Proxy for Jenkins:
+
+    sudo nano /etc/nginx/sites-available/jenkins
+
+    server {
+        listen 80;
+        server_name your_domain_or_ip;
+
+        location / {
+            proxy_pass http://localhost:8080;
+            proxy_set_header Host $host;
+            proxy_set_header X-Real-IP $remote_addr;
+        }
+    }
+
+    sudo ln -s /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/
+
+    sudo nginx -t
+
+    sudo systemctl restart nginx
+
+    http://your_domain_or_ip
+
+
+
