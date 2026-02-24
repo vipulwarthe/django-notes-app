@@ -1,6 +1,10 @@
 # Simple Notes App
 This is a simple notes app built with React and Django.
 
+Declarative CI/CD Pipeline in Jenkins demo link
+
+    https://medium.com/@m.qasimnauman/declarative-ci-cd-pipeline-in-jenkins-5e636a4976dc 
+
 ## Requirements
 1. Python 3.9
 2. Node.js
